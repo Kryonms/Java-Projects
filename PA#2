@@ -21,6 +21,9 @@
     private static boolean repeat = false;//variable initialization for boolean repeat
     private static Scanner input = new Scanner(System.in);//created a new scanner object input
     
+    //the main method will be used to call several other methods, such as printThankYou(), promptInsuredName(), 
+    //promptHomeInsVal(), promptRichter(), testRichter, addToCoverage(), and printCoverage(). Each of these methods
+    //serves a specific purpose, and will either gather user input or perform calculations on that input.
     public static void main(String[] args)
     {//BEGIN main method
       
@@ -32,12 +35,11 @@
       char another = ' ';//variable initialization for the char another
       Calendar dateTime = Calendar.getInstance();//created a new calendar object dateTime
       
-      System.out.printf("%nMUTUALLY ACCIDENTAL, INC."); //BEGIN PROMPT 1
-      System.out.printf("%n%nDo you want an analysis of earthquake coverage"
+      System.out.printf("%nMUTUALLY ACCIDENTAL, INC.%n%nDo you want an analysis of earthquake coverage" //BEGIN PROMPT 1
                           + " for your property? Enter 'Y' or 'N':  ");
       cont = input.next().charAt(0); //END PROMPT 1
       
-      while(Character.toUpperCase(cont) == 'Y')
+      while(Character.toUpperCase(cont) == 'Y')//tests if the user wants to use the calculator or not
       { //BEGIN while cont == 'Y'
         insured = promptInsuredName(); //prompt for insured's name + store it in insured var
         
@@ -53,39 +55,44 @@
             richter = promptRichter();
             testRichter(richter, homeInsVal);
             
-            
             System.out.printf("%nYour Name: %S"
                                 + "%nHome's Insured Value $%,20.2f"
-                                + "%nRichter Scale: %,2.2f", insured, homeInsVal, richter);
-            System.out.printf("%nIs this information correct? 'Y' or 'N':  ");
+                                + "%nRichter Scale: %,2.2f%n%nIs this information correct? 'Y' or 'N':  "
+                                , insured, homeInsVal, richter);
+            
             correct = input.next().charAt(0);
             
           } while(Character.toUpperCase(correct) == 'N');
           
           addToCoverage(richter);
           
-          System.out.printf("%nDo you have another property? Enter 'Y' or 'N':  ");
+          System.out.printf("Do you have another property? Enter 'Y' or 'N':  ");
           another = input.next().charAt(0);
           
         } while(Character.toUpperCase(another) == 'Y');
         printCoverage(richter); //PRINTING COVERAGE
         
-        System.out.printf("%nMUTUALLY ACCIDENTAL, INC.");
-        System.out.printf("%nEnter 'Y' to continue with another homeowner or 'N' to exit:  "); //asking to restart loop with new homeowner
+        System.out.printf("%nMUTUALLY ACCIDENTAL, INC.%nEnter 'Y' to continue with"
+                           +"another homeowner or 'N' to exit:  ");
+         //asking to restart loop with new homeowner
         cont =  input.next().charAt(0); 
         
       } //END while cont == 'Y'
-      printThankYou();
+      printThankYou();//prints a simple thank you message for using the program
       
     }//END main method
 
+    //the purpose of the promptInsuredName() method is to ask the user what their name is, and return the input from
+    //user. This input will then be stored in insured variable in the main method.
     public static String promptInsuredName()
     {//BEGIN promptInsuredName 
-      System.out.printf("%nMUTUALLY ACCIDENTAL, INC.%nEarthquake coverage Analyzer%n%n"
+      System.out.printf("MUTUALLY ACCIDENTAL, INC.%nEarthquake coverage Analyzer%n%n"
                           + "Please enter your name: ");
       return input.next();
     }//END promptInsuredName
 
+    //the purpose of the promptHomeInsVal() method is to take validated user input of type double and store it into
+    //the variable homeInsVal in the main method.
     public static double promptHomeInsVal()
     {//BEGIN promptHomeInsVal
       double homeInsVal;
@@ -94,46 +101,53 @@
         do
         {
           repeat = false;
-          System.out.printf("%nMUTUALLY ACCIDENTAL, INC.%nEarthquake Coverage Analyzer%n%n"
-                              +"Please enter the insured value of your home: "); 
-          validateNumber(!input.hasNextDouble());
-          homeInsVal = input.nextDouble();
-          input.nextLine(); //clear buffer
+          System.out.printf("%nPlease enter the insured value of your home: "); 
+          validateNumber(!input.hasNextDouble());          
+        } while(repeat == true);
+        
+        homeInsVal = input.nextDouble();
+        input.nextLine(); //clear buffer
+        
+        if (homeInsVal < 0)
+        {
+          System.out.printf("%nThe insured value of your home cannot be less than or equal to 0.%n");
+          repeat = true;
+        }
           
-          if (homeInsVal < 0)
-          {
-            System.out.printf("%nThe insured value of your home cannot be less than or equal to 0.");
-            repeat = true;
-          }
-          
-        }while(repeat == true);
       }while(repeat == true);
       return homeInsVal;
       
       
     }//END promptHomeInsVal    
     
+    //the purpose of the promptRichter() method is to take validated user input of type double and store it into
+    //the richter value of the main method. A calculation will then be performed later in the program using both
+    //homeInsVal and richter value.
     public static double promptRichter()
     {//BEGIN promptRichter
       double richter;
-      do 
-      {//BEGIN do-while
-        repeat = false; 
-        System.out.printf("%n     9.0+         Total destruction."
-                            + "%n     8.0          Most structures fell."
-                            + "%n     7.0          Many buildings destroyed."
-                            + "%n     6.0          Many buildings considerably damaged, some collapsed."
-                            + "%n     4.5          Damage to poorly constructed buildings."
-                            + "%n     3.5          Felt by many people, no destruction."
-                            + "%n     0            Generally not felt by people.");
-        System.out.printf("%nPlease enter the Richter scale value for the earthquake:  ");
-        validateNumber(!input.hasNextDouble());
+      do   
+      {
+        do
+        {//BEGIN do-while
+          repeat = false; 
+          System.out.printf("%nRichter Scale     Damage Assessment"
+                              + "%n     9.0+         Total destruction."
+                              + "%n     8.0          Most structures fell."
+                              + "%n     7.0          Many buildings destroyed."
+                              + "%n     6.0          Many buildings considerably damaged, some collapsed."
+                              + "%n     4.5          Damage to poorly constructed buildings."
+                              + "%n     3.5          Felt by many people, no destruction."
+                              + "%n     0            Generally not felt by people.");
+          System.out.printf("%n%nPlease enter the Richter scale value for the earthquake:  ");
+          validateNumber(!input.hasNextDouble());
+        } while(repeat == true);
         richter = input.nextDouble();
         input.nextLine(); //clear buffer
         
         if (richter < 0) 
         { //BEGIN if richter
-          System.out.printf("%nInvalid! Richter cannot be negative. Please re-enter%n");
+          System.out.printf("%nInvalid! Richter cannot be negative. Please re-enter.%n");
           repeat = true;
         } //END if richter
        
@@ -141,16 +155,22 @@
       return richter;
     }//END promptRichter
       
-    public static void validateNumber(boolean repeat)
+    //the purpose of the validateNumber method is to test any number that a user inputs where this method is called.
+    //if the user has inputted incorrect input, a warning message is displayed and then the loop will be reentered
+    //in the method where validateNumber is called.
+    public static void validateNumber(boolean repeat1)
     {//BEGIN validateNumber
-      repeat = repeat;
+      repeat = repeat1;
       if(repeat == true)
       {//BEGIN if repeat == true
         input.next(); //clear buffer
-        System.out.printf("Warning: You entered an invalid integer or floating-point value.");
+        System.out.printf("%nWarning: You entered an invalid integer or floating-point value.%n");
       }//END if repeat == true
     }//END validateNumber
     
+    //the purpose of the testRichter() method is to perform a calculation that will later be used in the final output
+    //portion of the main method. We take the homeInsVal and richter value and create several new variables such as
+    //payout, deductible, and message. These values will be used later in the program.
     public static void testRichter(double richter, double homeInsVal)
     {//BEGIN testRichter
       if (richter >= 9.0) {//set payout, deductible, and message if richter >= 9.0
@@ -184,6 +204,9 @@
      }//end if-else-if test
     }//END testRichter
     
+    //the purpose of the addToCoverage() method is to print formatted output using several variables that we have
+    //created earlier in the program. It will use message, payout, and deductible that were gathered from the 
+    //previous method
     public static void addToCoverage(double richter) 
     {//BEGIN addToCoverage
       if (richter >= 0) 
@@ -196,6 +219,9 @@
       }//END if richter >= 0
     }//END addToCoverage
     
+    
+    //the purpose of the printCoverage() method is to test that richter is >= 0, and if the test passes then coverage 
+    //is printed which is the final output of the program.
     public static void printCoverage(double richter)
     {//BEGIN printCoverage
       if (richter >= 0) 
@@ -203,8 +229,168 @@
       
     }//END printCoverage
     
+    //the purpose of the printThankYou() method is to return a simple thank you message for using the program.
     public static void printThankYou()
     {//BEGIN printThankYou
       System.out.printf("%nThank you for using the Earthquake Coverage Analyzer.");
     }//END printThankYou
  }//END public class HernandezSkinner002PA2
+ 
+/*
+MUTUALLY ACCIDENTAL, INC.
+
+Do you want an analysis of earthquake coverage for your property? Enter 'Y' or 'N':  n
+
+Thank you for using the Earthquake Coverage Analyzer.
+MUTUALLY ACCIDENTAL, INC.
+
+Do you want an analysis of earthquake coverage for your property? Enter 'Y' or 'N':  y
+MUTUALLY ACCIDENTAL, INC.
+Earthquake coverage Analyzer
+
+Please enter your name: rihanna
+
+Please enter the insured value of your home: l
+
+Warning: You entered an invalid integer or floating-point value.
+
+Please enter the insured value of your home: -1
+
+The insured value of your home cannot be less than or equal to 0.
+
+Please enter the insured value of your home: 1OOOOOOO
+
+Warning: You entered an invalid integer or floating-point value.
+
+Please enter the insured value of your home: 10000000
+
+Richter Scale     Damage Assessment
+     9.0+         Total destruction.
+     8.0          Most structures fell.
+     7.0          Many buildings destroyed.
+     6.0          Many buildings considerably damaged, some collapsed.
+     4.5          Damage to poorly constructed buildings.
+     3.5          Felt by many people, no destruction.
+     0            Generally not felt by people.
+
+Please enter the Richter scale value for the earthquake:  -6
+
+Invalid! Richter cannot be negative. Please re-enter.
+
+Richter Scale     Damage Assessment
+     9.0+         Total destruction.
+     8.0          Most structures fell.
+     7.0          Many buildings destroyed.
+     6.0          Many buildings considerably damaged, some collapsed.
+     4.5          Damage to poorly constructed buildings.
+     3.5          Felt by many people, no destruction.
+     0            Generally not felt by people.
+
+Please enter the Richter scale value for the earthquake:  O
+
+Warning: You entered an invalid integer or floating-point value.
+
+Richter Scale     Damage Assessment
+     9.0+         Total destruction.
+     8.0          Most structures fell.
+     7.0          Many buildings destroyed.
+     6.0          Many buildings considerably damaged, some collapsed.
+     4.5          Damage to poorly constructed buildings.
+     3.5          Felt by many people, no destruction.
+     0            Generally not felt by people.
+
+Please enter the Richter scale value for the earthquake:  6
+
+Your Name: RIHANNA
+Home's Insured Value $       10,000,000.00
+Richter Scale: 6.00
+
+Is this information correct? 'Y' or 'N':  y
+Do you have another property? Enter 'Y' or 'N':  y
+
+Please enter the insured value of your home: 500000
+
+Richter Scale     Damage Assessment
+     9.0+         Total destruction.
+     8.0          Most structures fell.
+     7.0          Many buildings destroyed.
+     6.0          Many buildings considerably damaged, some collapsed.
+     4.5          Damage to poorly constructed buildings.
+     3.5          Felt by many people, no destruction.
+     0            Generally not felt by people.
+
+Please enter the Richter scale value for the earthquake:  5.50
+
+Your Name: RIHANNA
+Home's Insured Value $          500,000.00
+Richter Scale: 5.50
+
+Is this information correct? 'Y' or 'N':  y
+Do you have another property? Enter 'Y' or 'N':  n
+
+
+PAYOUT FOR EARTHQUAKE DAMAGE
+
+Homeowner: RIHANNA
+
+Date: 04/02/22
+Time: 09:34:17 AM
+
+Many buildings considerably damaged, some collapsed.      $        6,000,000.00
+Deductible                                                         4,000,000.00
+                                               TOTAL      $       10,000,000.00
+
+Damage to poorly constructed buildings.                   $          250,000.00
+Deductible                                                           250,000.00
+                                               TOTAL      $          500,000.00
+
+MUTUALLY ACCIDENTAL, INC.
+Enter 'Y' to continue withanother homeowner or 'N' to exit:  y
+MUTUALLY ACCIDENTAL, INC.
+Earthquake coverage Analyzer
+
+Please enter your name: Bruce Wayne
+
+Please enter the insured value of your home: 
+Warning: You entered an invalid integer or floating-point value.
+
+Please enter the insured value of your home: 7000000
+
+Richter Scale     Damage Assessment
+     9.0+         Total destruction.
+     8.0          Most structures fell.
+     7.0          Many buildings destroyed.
+     6.0          Many buildings considerably damaged, some collapsed.
+     4.5          Damage to poorly constructed buildings.
+     3.5          Felt by many people, no destruction.
+     0            Generally not felt by people.
+
+Please enter the Richter scale value for the earthquake:  7
+
+Your Name: BRUCE
+Home's Insured Value $        7,000,000.00
+Richter Scale: 7.00
+
+Is this information correct? 'Y' or 'N':  y
+Do you have another property? Enter 'Y' or 'N':  n
+
+
+PAYOUT FOR EARTHQUAKE DAMAGE
+
+Homeowner: BRUCE
+
+Date: 04/02/22
+Time: 09:34:17 AM
+
+Many buildings destroyed.                                 $        4,900,000.00
+Deductible                                                         2,100,000.00
+                                               TOTAL      $        7,000,000.00
+
+MUTUALLY ACCIDENTAL, INC.
+Enter 'Y' to continue withanother homeowner or 'N' to exit:  n
+
+Thank you for using the Earthquake Coverage Analyzer.
+*/
+ 
+ 
+ 
