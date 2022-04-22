@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<drjava version="drjava-20190813-220051">
+  <project autorefresh="false" build="classes/" main="HernandezSkinner002PA3" root="" work="src/">
+    <createjar file=""/>
+    <source>
+      <file active="true" name="src/InsuranceSystem.java" package="" timestamp="21-Apr-2022 19:44:21">
+        <select from="0" to="0"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="src/EarthquakeInsurance.java" package="" timestamp="21-Apr-2022 19:30:59">
+        <select from="0" to="0"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="src/HernandezSkinner002PA3.java" package="" timestamp="21-Apr-2022 19:30:59">
+        <select from="0" to="0"/>
+        <scroll column="0" row="0"/>
+      </file>
+    </source>
+    <included/>
+    <excluded/>
+    <collapsed/>
+    <classpath/>
+    <breakpoints/>
+    <watches/>
+    <bookmarks/>
+    <preferences/>
+  </project>
+</drjava>
