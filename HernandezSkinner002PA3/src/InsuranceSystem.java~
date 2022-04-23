@@ -1,0 +1,95 @@
+/**
+ * 
+ * @(#)InsuranceSystem.java
+ * @authors Rafael Hernandez and Sarah Skinner
+ * @version 1.00 2022/04/20 10:57 PM
+ *
+ * PROGRAM PURPOSE: Handles the insurance claims created in the EarthquakeInsurance class 
+ * and creates a record of the claims in an output file. 
+ */
+
+import java.util.Scanner;   //imports the scanner class for capturing user input
+import java.util.Calendar;  //imports the Calendar class for displaying current date/time
+import java.util.ArrayList; //imports the arraylist class 
+import java.io.*;           //imports all classes under java.io for IO exceptions, file, and printwriter
+//import calendar, arraylist, file, printwriter, ioexception
+
+public class InsuranceSystem
+{
+  //class data members
+  private EarthquakeInsurance claims = new EarthquakeInsurance(); //MAY NOT WORK
+  private Scanner input = new Scanner(System.in); //Scanner object to read user input
+  private Calendar dateTime = Calendar.getInstance(); //Calendar object to reference data and time
+  private ArrayList<String> claimsReport= new ArrayList<String>();
+  private String filename; //Stores name of output file
+  private char cont; //Stores loop test variable
+  private char correct; //Stores user's input on whether the data is correct
+  
+  public InsuranceSystem()
+  {
+  }//END InsuranceSystem()
+  
+  public void start()
+  {
+    //begin prompt 1 
+    System.out.printf("%nMUTUALLY ACCIDENTAL, INC."); 
+    System.out.printf("%n%nDo you want an analysis of earthquake coverage"
+                        + " for your property? Enter 'Y' or 'N':  ");
+    cont = input.next().charAt(0); //END PROMPT 1
+    
+    if(Character.toUpperCase(cont) == 'Y')
+    {
+      //processClaims();
+      //writeClaimsRecords();
+      //checkInputFile();
+    }//END if cont == 'Y' 
+    else {
+      printThankYou();
+    }//END else                          
+   }//END start()
+  
+  public void processClaims()
+  {
+    int size;
+    int j;
+    int k;
+    
+    String suffix;
+    String aClaim;
+    
+    processClaims();
+    String record;
+    //PrintWriter outputFile = new PrintWriter("File");
+    
+    //outputFile.close();
+    
+    //checkInputFile();
+    
+    
+  }//END processClaims
+  
+  public void writeClaimsRecords() 
+  {
+    String record; 
+    PrintWriter outputFile = null; 
+    
+    
+    
+  }//END writeCLaimesRecords()
+  
+  public void checkInputFile() 
+  {
+    String fileName = "";
+    File file = new File(fileName);
+    Scanner inputFile = new Scanner(System.in);
+    String fileRecord; 
+    
+    
+  }//END checkInputFile()
+  
+  public void printThankYou()
+  {
+    System.out.printf("%nThank you for using the Earthquake Coverage Analyzer.");
+  }//END printThankYou
+  
+}//END application class InsuranceSystem
